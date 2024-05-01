@@ -1,0 +1,86 @@
+<template>
+
+    <template if:true={isSelected}>
+       <c-edited-add-case-form 
+         edited_subject={reviewFormData.edited_subject}
+         edited_description={reviewFormData.edited_description} 
+         edited_priority={reviewFormData.edited_priority} 
+         edited_tag_options={reviewFormData.edited_tag_options}
+         edited_type_options={reviewFormData.edited_type_options}
+         edited_image={reviewFormData.edited_image}  
+         edited_product_id={reviewFormData.product_id}
+
+         edited_product={reviewFormData.edited_product}
+       
+       ></c-edited-add-case-form>
+    </template>
+
+
+    <template if:false={isSelected}>
+        <lightning-card title="Verifier la demande">
+        
+        <lightning-card title="Sujet">
+        <div class="slds-form-element__control slds-grid slds-wrap">
+           <h3>{subject}</h3>
+            <lightning-button-icon icon-name="utility:edit" onclick={handleEdit}></lightning-button-icon>
+        </div>
+        </lightning-card>
+        
+        <lightning-card title="Description">
+        <div class="slds-form-element__control slds-grid slds-wrap">
+            <h3>{description}</h3>
+            <lightning-button-icon icon-name="utility:edit" onclick={handleEdit}></lightning-button-icon>
+        </div>
+        </lightning-card>
+
+        <lightning-card title="Priorité">
+        <div class="slds-form-element__control slds-grid slds-wrap">*
+            <h3>{priority}</h3>
+            <lightning-button-icon icon-name="utility:edit" onclick={handleEdit}></lightning-button-icon>
+        </div>
+        </lightning-card>
+
+        <lightning-card title="Type de probleme">
+            <div class="slds-form-element__control slds-grid slds-wrap">*
+                <h3>{type_options}</h3>
+                <lightning-button-icon icon-name="utility:edit" onclick={handleEdit}></lightning-button-icon>
+            </div>
+            </lightning-card>
+
+        <lightning-card title="Type de Problème">
+        <div class="slds-form-element__control slds-grid slds-wrap">
+            <h3>{tag_options}</h3>
+            <lightning-button-icon icon-name="utility:edit" onclick={handleEdit}></lightning-button-icon>
+        </div>
+        </lightning-card>
+
+        <lightning-card title="Produit">
+        <div class="slds-form-element__control slds-grid slds-wrap">
+            <h3>{product}</h3>
+            <lightning-button-icon icon-name="utility:edit" onclick={handleEdit}></lightning-button-icon>
+        </div>
+        </lightning-card>
+
+        <template if:true={image}>
+        <lightning-card title="Pièces jointes">        
+                    <img src={imageSrc} style="max-width: 100%; max-height: 200px;margin-left:20px;margin-right: 10px;" id="imageElement" />
+                    <lightning-button-icon icon-name="utility:edit" onclick={handleEdit}></lightning-button-icon>
+        </lightning-card>
+        </template>
+
+        <div class="slds-grid slds-grid_align-end slds-p-top_medium">
+            <div class="slds-col">
+                <lightning-button label="Retour" onclick={handleEdit} class="returnButton" ></lightning-button>
+            </div>
+          
+            <div class="slds-col">
+                <lightning-button label="Enregistrer" onclick={createCase} class="returnButton"></lightning-button>
+            </div>
+           
+        </div>
+     
+
+        </lightning-card>
+</template>
+
+</template>

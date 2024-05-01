@@ -1,0 +1,28 @@
+<template>
+
+        <lightning-card title="Ajouter une commentaire sur votre demande">
+            <div class="slds-p-around_medium">
+                    
+              <lightning-textarea
+              name="inputTextArea"
+              placeholder="Entrez votre texte ici"
+              value={commentBody}
+              onchange={handleCommentChange}>
+            </lightning-textarea>
+
+          <div class="slds-grid slds-grid_align-center slds-p-top_medium">
+            
+            <div class="slds-col">
+                <lightning-button label="Ajouter" onclick={handleAjout}></lightning-button>
+            </div>
+           
+            <div class="slds-col">
+              <lightning-button label="Retour" onclick={handleRetour}></lightning-button>
+          </div>
+       
+        </div>
+        
+    </div>
+        </lightning-card>
+    
+</template>

@@ -1,0 +1,9 @@
+.returnButton{
+    margin-right: 10px;
+    padding-right: 20px;
+}
+
+.neutral-button {
+    background-color: grey;
+    color: #000000;
+}

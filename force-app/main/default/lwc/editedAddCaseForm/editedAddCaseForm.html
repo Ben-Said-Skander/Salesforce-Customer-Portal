@@ -1,0 +1,96 @@
+<template>
+    <template if:true={isSelectedSuivant}>
+        <lightning-card title="Créer une nouvelle demande">
+           
+            <div class="slds-p-around_medium">
+               
+                <lightning-input label="Sujet" value={subject} onchange={handleSubjectChange}></lightning-input>
+                <lightning-input label="Description" value={description} onchange={handleDescriptionChange}></lightning-input>
+                <lightning-combobox 
+                    label="Priorité"
+                    value={priority} 
+                    options={priorityOptions} 
+                    placeholder="Sélectionnez une option"
+                    onchange={handlePriorityChange}>
+                </lightning-combobox>
+                
+                <lightning-combobox 
+                    label="Type de Problème" 
+                    value={type} 
+                    options={typeOptions} 
+                    placeholder="Sélectionnez une option"
+                    onchange={handleTypeChange}>
+                </lightning-combobox>
+
+
+                <label class="slds-form-element__label slds-m-top_small">Type de problème</label>
+                <lightning-checkbox-group 
+                   name="problemTypes" 
+                   options={problemTagOptions} 
+                   value={selectedProblemTags} 
+                   onchange={handleTagChange} 
+                   class="typeOptions">
+                </lightning-checkbox-group>
+            
+               
+                <label class="slds-form-element__label slds-m-top_small">Liste des affaires</label>
+                <div>
+                    <lightning-datatable
+                    key-field="Id"
+                    data={opportunities}
+                    columns={columns}
+                    onrowaction={handleRowAction}
+                    hide-checkbox-column="true"
+                ></lightning-datatable>
+                </div>
+     
+                <div>
+                    <template if:true={selectedOpportunityId}>
+                        <label class="slds-form-element__label slds-m-top_small">Catalogue des produits</label>
+                        <lightning-datatable
+                            id="datatable2"
+                            key-field="Id"
+                            data={opportunityProducts}
+                            columns={productColumns}
+                            onrowselection={handleRowSelection}>
+                        </lightning-datatable>
+
+                    </template>
+                    </div>
+                    
+
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label slds-m-top_small">Pièces jointes</label>
+                        <div class="slds-form-element__control">
+                            <input type="file" accept=".jpg,.jpeg,.png" onchange={handleImageChange} />
+                            <template if:true={image}>
+                                <img src={image} style="max-width: 100%; max-height: 200px;" />
+                            </template>
+                        </div>
+                    </div>
+             
+                
+
+                <div class="slds-grid slds-grid_align-end slds-p-top_medium">
+                    <div class="slds-col">
+                        <lightning-button label="Suivant" onclick={handleSuivant}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+    <template if:false={isSelectedSuivant}>
+        <c-review-form 
+        subject={reviewFormData.subject}
+        description={reviewFormData.description} 
+        priority={reviewFormData.priority} 
+        tag_options={reviewFormData.tag}
+        type_options={reviewFormData.type}
+        product={reviewFormData.productName}
+        image={reviewFormData.image}  
+        product_id={reviewFormData.product_id}
+        >  
+        </c-review-form>
+    
+    </template>
+</template>

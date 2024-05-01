@@ -1,0 +1,24 @@
+<template>
+    <lightning-card >
+
+        <div class="slds-grid slds-grid_vertical-align-center">
+            <h1 class="title">Trust Maintenance Information</h1>
+            <div class="slds-grid slds-grid_align-end slds-p-top_medium">
+                <div class="slds-col" style="margin-left: 90px;">
+                    <lightning-button label="Check Release updates" onclick={handleReleaseUpdate} ></lightning-button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dataTable">
+            <lightning-datatable
+            key-field="id"
+            data={data}
+            columns={columns}
+            hide-checkbox-column
+        ></lightning-datatable>
+        </div>
+   </lightning-card>
+        
+
+</template>

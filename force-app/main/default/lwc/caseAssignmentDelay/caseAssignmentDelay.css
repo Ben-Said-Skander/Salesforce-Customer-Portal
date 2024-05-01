@@ -1,0 +1,36 @@
+.green {
+    margin-left: 150;
+    padding-left: 80;
+    width: 200px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.orange {
+    margin-left: 150;
+    width: 200px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.red {
+    padding-left: 80;
+    margin-left: 80;
+    width: 200px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.circle p {
+    margin: 30px; /* Remove default margin of <p> tag */
+}
+

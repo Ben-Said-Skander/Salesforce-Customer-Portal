@@ -1,0 +1,62 @@
+<template>
+    <div class="slds-p-around_medium">
+        
+      <template if:true={isThereOpenCase}>
+
+        <lightning-card title="L'état de votre demande Actuelle">
+          
+            <div class="label">
+                <span>
+                    <label class="slds-form-element__label slds-m-top_small">Sujet de la demande :  </label> {subject}
+                </span>    
+            </div>
+           
+            <div class="label">
+                <span>
+                    <label class="slds-form-element__label slds-m-top_small">Description :</label> {description}
+                </span>   
+            </div>
+            
+            <div class="label">
+                <label class="slds-form-element__label slds-m-top_small">Statut de la demande :</label>
+            </div>
+
+            <div >          
+                <div style="padding-left: 15px;padding-right:15px;padding-top:10px">
+                    <lightning-progress-indicator current-step={currentStep} type="path" class="custom_css" variant="base" >
+                        <template for:each={steps} for:item="step">
+                            <lightning-progress-step key={step.label} label={step.label} value={step.value}  ></lightning-progress-step>
+                        </template>
+                    </lightning-progress-indicator>
+                </div>
+                           
+                <div style="margin-top: 10px;margin-left:10px;">
+                    <lightning-button label="Clotuer la demande" onclick={handleConfirmClick}></lightning-button>
+                </div>
+           
+            </div>
+            
+            <div class="label">
+                <span>
+                    <label class="slds-form-element__label slds-m-top_small">Priorité :</label> {priority}
+                </span>          
+            </div>
+
+            <div class="label">
+                <span>
+                    <label class="slds-form-element__label slds-m-top_small">Date d'ouverture :</label> {openedDate}
+                </span>         
+            </div>  
+        </lightning-card>
+    </template>
+    
+    <template if:false={isThereOpenCase}>
+      <div class="slds-p-around_medium">
+        <lightning-card title="L'etat de votre demande Actuelle" class="slds-text-align_center">
+          <h1>Aucune demande n'est ouverte</h1>
+        </lightning-card>
+      </div>  
+    </template>
+    
+</div>
+</template>

@@ -1,0 +1,38 @@
+<template>
+    
+  <template if:true={isThereOpenCase}>
+    <template if:true={hasArticles}>
+         <lightning-card title="Des articles reliés à votre demande" >
+
+            <div class="slds-p-around_medium">
+            <ul>
+                <template for:each={articles} for:item="article">
+                    <li key={article.Id} class="solution">
+                        <a href={article.UrlName}> - {article.Title}</a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+        </lightning-card>
+    </template>
+
+    <template if:false={hasArticles}>
+            <lightning-card title="Des articles reliés à votre demande" >
+                <div class="slds-grid slds-grid_align-center slds-p-top_medium">
+                    <div class="slds-col">
+                <p>Aucun article n'est trouvé</p>
+            </div>
+        </div>
+            </lightning-card>
+     </template>
+    </template>
+
+     <template if:false={isThereOpenCase}>
+        <div class="slds-p-around_medium">
+          <lightning-card title="L'etat de votre demande Actuelle" class="slds-text-align_center">
+            <h1>Aucune demande n'est ouverte</h1>
+          </lightning-card>
+        </div>  
+      </template>
+    
+</template>

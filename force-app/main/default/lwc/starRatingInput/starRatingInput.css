@@ -1,0 +1,11 @@
+.rating {
+    display: flex;
+}
+
+.selected {
+    color: gold;
+}
+
+.unselected {
+    color: grey;
+}

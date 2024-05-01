@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Liste Des demandes">
+                  
+        <lightning-datatable
+            key-field="Id"
+            data={cases}
+            columns={columns}
+            onrowaction={handleRowAction}
+            hide-checkbox-column="true"
+        ></lightning-datatable>
+
+</lightning-card>
+</template>

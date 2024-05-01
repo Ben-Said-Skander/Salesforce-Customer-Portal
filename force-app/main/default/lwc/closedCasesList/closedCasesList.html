@@ -1,0 +1,21 @@
+<template>
+
+<template if:false={isCaseSelected}>
+    <lightning-card title="Liste Des demandes fermées">
+                  
+        <lightning-datatable
+           key-field="Id"
+           data={closedCases}
+           columns={columns}
+           onrowaction={handleRowAction}
+         hide-checkbox-column="true"
+       ></lightning-datatable>
+   
+    </lightning-card>
+</template>
+
+<template if:true={isCaseSelected}>
+    <c-add-survey case_id={selectedCaseId} ></c-add-survey>
+</template>
+
+</template>

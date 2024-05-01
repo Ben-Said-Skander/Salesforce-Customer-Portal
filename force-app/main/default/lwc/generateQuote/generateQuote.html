@@ -1,0 +1,28 @@
+<template>
+           
+            <template if:true={isAtLeastOneQuoteSyncing}>
+                <template if:true={openPDFPreview}>
+                   <c-quote-preview opportunity_id={oppId} quote_id={quoteId}></c-quote-preview>
+                </template>
+                <template if:false={openPDFPreview}>
+                      <lightning-card title="Génération d'un devis" >
+                         <div class="slds-grid slds-grid_align-center slds-p-top_medium">
+                      <lightning-button label="Générer un devis" onclick={openPDF}></lightning-button>
+                  
+                         </div>
+                      </lightning-card>
+                 </template>
+          </template>
+
+            <template if:false={isAtLeastOneQuoteSyncing}>
+                    <lightning-card title="Génération de devis impossible">
+                        <div class="slds-grid slds-grid_align-center slds-p-top_medium">
+                          <h1>
+                             Vous n avez pas de devis lié à cette opportunite.
+                          </h1>
+                        </div>
+                    </lightning-card>
+            </template>
+
+           
+</template>

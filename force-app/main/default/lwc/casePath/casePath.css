@@ -1,0 +1,10 @@
+.path{
+    margin-top: 10px;
+}
+.label{
+    margin-left: 10px;
+}
+.custom_css {
+    --slds-g-color-neutral-base-80: #59a9c6; 
+    --slds-g-color-neutral-base-95: #a4a0a0; 
+}

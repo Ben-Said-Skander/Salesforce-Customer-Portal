@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Coverage Stats">
+        <div>
+            <h1 class={overallCoverageColor}>Overall Coverage : {overallCoverage} %</h1>
+        </div>
+
+        <div>
+            <h1 class="overallCoverage">Test classes with coverage problems</h1>
+            <p class="testStats">
+                <template for:each={testStats} for:item="test">
+                    <p key={test.Index} class="testName">{test.name} : {test.coverage} %</p>
+                </template>
+            </p>
+        </div>
+    </lightning-card>
+</template>

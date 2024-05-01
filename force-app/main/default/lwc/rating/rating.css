@@ -1,0 +1,19 @@
+.rating {
+    display: inline-flex;
+}
+
+.rating-star {
+    color: #ffd700; 
+}
+
+.note{
+    margin-top: 10px; 
+    margin-left: 5px;
+}
+
+.question{
+    margin-left: 5px;
+}
+.response{
+    margin-left: 5px;
+}

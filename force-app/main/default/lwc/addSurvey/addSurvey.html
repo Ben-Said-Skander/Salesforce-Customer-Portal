@@ -1,0 +1,74 @@
+<template>
+  
+
+<template if:false={isSurveySaved}>
+      <lightning-card title="Enquête sur le niveau de support fournie">
+       
+         <div class="slds-p-around_medium">
+  
+         
+   
+         <lightning-combobox label="Êtes-vous satisfait de la résolution apportée à votre demande ?" 
+            value={question1} 
+            options={Question1Options} 
+            placeholder="Sélectionnez une option"
+            onchange={handleQuestion1Change}>
+         </lightning-combobox>
+       
+         <lightning-combobox label="Comment évalueriez-vous le professionnalisme et l'efficacité de nos agents de support ?" 
+            value={question2} 
+            options={Question2Options} 
+            placeholder="Sélectionnez une option"
+            style="margin-top: 15px;"
+            onchange={handleQuestion2Change}>
+         </lightning-combobox>
+         
+         <lightning-combobox 
+             label="Globalement, êtes-vous satisfait du service de support que vous avez reçu ?" 
+             value={question3} 
+             options={Question3Options} 
+             style="margin-top: 15px;"
+             placeholder="Sélectionnez une option"
+             onchange={handleQuestion3Change}>
+        </lightning-combobox>
+         
+         <lightning-textarea
+           name="inputTextArea"
+           label="Y a-t-il quelque chose que nous aurions pu faire différemment pour améliorer votre expérience"
+           placeholder="Entrez votre texte ici"
+           style="margin-top: 15px;"
+           value={textAreaValueQ4}
+           onchange={handleQuestion4Change}>
+         </lightning-textarea>
+ 
+ 
+         <lightning-textarea
+            name="inputTextArea"
+            label="Avez-vous des commentaires ou des suggestions supplémentaires à partager"
+            placeholder="Entrez votre texte ici"
+            value={textAreaValueQ5}
+            style="margin-top: 4px;"
+            onchange={handleQuestion5Change}>
+        </lightning-textarea>
+
+        <c-star-rating onratingchange={handleRatingChange}></c-star-rating>
+
+        <div class="slds-grid slds-grid_align-end slds-p-top_medium">
+         <div class="slds-col">
+             <lightning-button label="Retour" onclick={handleRetour} class="returnButton"></lightning-button>
+         </div>
+         <div class="slds-col">
+             <lightning-button label="Enregistrer" onclick={createSurvey}></lightning-button>
+         </div>
+         </div>
+     </div>
+       </lightning-card>
+
+      </template>
+
+<template if:true={isSurveySaved}>
+   <c-closed-cases-list ></c-closed-cases-list>
+</template>
+
+   
+</template>

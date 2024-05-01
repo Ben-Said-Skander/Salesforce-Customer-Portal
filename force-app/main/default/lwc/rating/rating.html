@@ -1,0 +1,43 @@
+<template>
+    <lightning-card title="Satisfaction de client">
+             
+             <div class="question">
+                <label class="slds-form-element__label slds-m-top_small " style="font-weight: bold; margin-left: 5px;">Satisfaction sur la résolution apportée à la demande : </label>
+                <p class="response">{question1}</p>
+            </div>
+           
+             <div class="question">
+                <label class="slds-form-element__label slds-m-top_small" style="font-weight: bold; margin-left: 5px;"> Satisfaction sur le professionnalisme et l'efficacité de l'agent de support :</label>
+                <p class="response">{question2}</p>
+            </div>
+            
+             <div class="question">
+                <label class="slds-form-element__label slds-m-top_small" style="font-weight: bold; margin-left: 5px;">Satisfaction sur le service de support reçu : </label>
+                <p class="response">{question3}</p>
+            </div>
+
+             <div class="question">
+                <label class="slds-form-element__label slds-m-top_small" style="font-weight: bold; margin-left: 5px;">Suggestion sur les points d'amelioration : </label>
+                <p class="response">{question4}</p>
+            </div>
+
+             <div class="question">
+                <label class="slds-form-element__label slds-m-top_small " style="font-weight: bold; margin-left: 5px;" >Notes ou commentaires :</label>
+                <p class="response">{question5}</p>
+            </div>
+
+             <div class="question">
+             <label class="slds-form-element__label slds-m-top_small" style="font-weight: bold; margin-left: 5px;"> Note sur le niveau de support fournie : </label>
+             </div>
+
+    <div class="note">
+    <template for:each={stars} for:item="star">
+        <lightning-icon
+            key={star.Index}
+            icon-name="utility:favorite"
+            variant={star.State}
+            size={size} >
+        </lightning-icon>
+    </template></div>
+</lightning-card>
+</template>

@@ -1,0 +1,27 @@
+<template>
+    
+    <lightning-card title="Ajouter une commentaire">
+        <div class="slds-p-around_medium">
+        <lightning-textarea
+          name="inputTextArea"
+          placeholder="Entrez votre texte ici"
+          value={commentBody}
+          onchange={handleCommentChange}>
+        </lightning-textarea>
+
+        <div class="slds-grid">
+            <label class="slds-form-element__label slds-m-top_small" style="margin-left: 5px;">Mettre la commentaire visible pour le client</label>
+            <lightning-input type="checkbox" checked={isChecked} onchange={handleChange} class="slds-form-element__label slds-m-top_small"></lightning-input>
+           
+        </div>
+        
+
+      <div class="slds-grid slds-grid_align-center slds-p-top_medium">
+        <div class="slds-col">
+            <lightning-button label="Ajouter" onclick={handleAjout} ></lightning-button>
+        </div>
+    </div>
+    
+</div>
+    </lightning-card>
+</template>

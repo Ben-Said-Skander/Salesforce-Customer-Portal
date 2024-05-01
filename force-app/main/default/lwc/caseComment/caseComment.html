@@ -1,0 +1,49 @@
+<template>
+    <div class="slds-p-around_medium">
+ 
+        <template if:true={isThereOpenCase}>
+          
+            <lightning-card title="Commentaires">      
+                <template for:each={agentComments} for:item="comment">
+                    <div key={comment.Id}>
+                        <h1 class="comment">{comment.agentCommentBody}</h1>
+                        <h5 class="publisher" style="margin-left: 20px;">{comment.agentCreatedDate}</h5>                 
+                        <h5 class="publisher" style="margin-left: 20px;">Commentaire rédigée par l'équipe de support</h5>
+                        <hr class="slds-m-top_medium slds-m-bottom_medium">
+                    </div>
+                </template>
+                
+                <template for:each={clientComments} for:item="comment">
+                    <div key={comment.Id}>
+                        <h1 class="comment">{comment.clientCommentBody}</h1>
+                        <h5 class="publisher" style="margin-left: 20px;">{comment.clientCreatedDate}</h5>
+                        <h5 class="publisher" style="margin-left: 20px;">Commentaire rédigée par vous-même</h5>
+                        <hr class="slds-m-top_medium slds-m-bottom_medium">
+                    </div>
+                </template>
+                
+                  
+                    <div class="slds-grid slds-grid_align-center slds-p-top_medium">
+                        <div class="slds-col">
+                            <lightning-button label="Ajouter une nouvelle commentaire" onclick={handleNewComment}></lightning-button>
+                        </div>
+                    </div>
+                  <br><br>
+                    <template if:true={isNewComment}>
+                        <c-add-comment onretour={handleRetour}></c-add-comment>               
+                    </template>                
+            </lightning-card> 
+        </template>
+            
+        <template if:false={isThereOpenCase}>
+            
+              <lightning-card title="Commentaires">  
+                <div class="slds-p-around_medium">    
+                <h1>Aucune demande n'est ouverte</h1>  
+                </div>         
+              </lightning-card> 
+            
+        </template>
+   
+        </div>
+</template>
