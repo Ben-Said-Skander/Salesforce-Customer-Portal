@@ -21,7 +21,6 @@ const COLUMNS = [
 ];
 
 const PRODUCT_COLUMNS = [
-    { type: 'checkbox', label: 'Sélectionné', typeAttributes: { disabled: false } },
     { label: 'Nom de Produit', fieldName: 'Name', type: 'text' },
     { label: 'Quantite', fieldName: 'Quantity', type: 'number' },
     { label: 'Prix Unitaire', fieldName: 'UnitPrice', type: 'currency' },
@@ -120,11 +119,13 @@ export default class addCaseForm extends NavigationMixin(LightningElement) {
     
 
     handleRowSelection(event) {
-        const selectedRows = event.detail.selectedRows;
-        this.selectedProductLineItem = selectedRows.map(row => ({
-            product_id: row.OpportunityLineItemId,
-            productName: row.Name
-        }));
+        const selectedProductId = event.currentTarget.dataset.productId;
+        const selectedProduct = this.opportunityProducts.find(product => product.OpportunityLineItemId === selectedProductId);
+        
+        this.selectedProductLineItem = [{
+            product_id: selectedProduct.OpportunityLineItemId,
+            productName: selectedProduct.Name
+        }];
     }
     
     handleImageChange(event) {

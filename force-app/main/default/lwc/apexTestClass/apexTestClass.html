@@ -1,0 +1,29 @@
+<template>
+    <lightning-card >
+
+        <div class="slds-grid slds-grid_vertical-align-center">
+            <h1 class="title">Apex Test  Coverage</h1>
+            <div class="slds-grid slds-grid_align-end slds-p-top_medium">
+                <div class="slds-col" style="margin-left: 90px;">
+                    <lightning-button label="Run Tests in my namespace" onclick={handleRunAllTestInNamespace} class="returnButton" ></lightning-button>
+                </div>
+                <div class="slds-col" >
+                    <lightning-button label="Run All Tests " onclick={handleRunAllTests} class="returnButton"></lightning-button>
+                </div>
+                <div class="slds-col">
+                    <lightning-button label="Clear Test Data" onclick={handleClearTestData} class="returnButton"></lightning-button>
+                </div>
+            </div>
+
+        </div>
+        <div class="dataTable">
+            <lightning-datatable
+               key-field="Id"
+               data={data}
+               columns={columns}>
+           </lightning-datatable>
+        </div>
+
+    </lightning-card>
+   
+</template>

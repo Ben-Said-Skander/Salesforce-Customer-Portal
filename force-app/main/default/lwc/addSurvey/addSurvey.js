@@ -96,7 +96,7 @@ export default class EnqueteSatisfaction extends LightningElement {
         })
         .then(() => {
             this.showToast('Success', 'Enquete remplie avec succès.', 'success');
-            this.isSurveySaved = true; // Optionally, set this to true if needed
+            this.isSurveySaved = true; 
         })
         .catch(error => {
             console.error('Error creating survey:', error);

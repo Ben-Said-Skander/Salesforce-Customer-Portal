@@ -104,44 +104,7 @@ public with sharing class TestExecutionHelper {
             throw new AuraHandledException('Error fetching maintenance info: ' + response.getStatus());
         }
     }
-/*
-    @AuraEnabled(cacheable=true)
-    public static void deleteAllApexTestResults() {
-        String sessionId = UserInfo.getSessionId();
-        String soapRequest = '<?xml version="1.0" encoding="UTF-8"?>' +
-            '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:tooling.soap.sforce.com">' +
-            '   <soapenv:Header>' +
-            '       <urn:SessionHeader>' +
-            '           <urn:sessionId>' + sessionId + '</urn:sessionId>' +
-            '       </urn:SessionHeader>' +
-            '   </soapenv:Header>' +
-            '   <soapenv:Body>' +
-            '       <urn:delete>' +
-            '           <urn:ids>' +
-            '               <urn:type>ApexTestResult</urn:type>' +
-            '               <urn:ids></urn:ids>' +
-            '           </urn:ids>' +
-            '       </urn:delete>' +
-            '   </soapenv:Body>' +
-            '</soapenv:Envelope>';
 
-        HttpRequest req = new HttpRequest();
-        req.setMethod('POST');
-        String baseUrl = 'https://' + System.Url.getOrgDomainUrl().getHost();
-        req.setEndpoint(baseUrl + '/services/Soap/T/59.0');
-        req.setHeader('Content-Type', 'text/xml');
-        req.setHeader('SOAPAction', '""');
-        req.setBody(soapRequest);
 
-        Http http = new Http();
-        HttpResponse res = http.send(req);
-
-        if (res.getStatusCode() == 200) {
-            System.debug('Delete operation successful');
-        } else {
-            throw new AuraHandledException('Failed to delete Apex test results: ' + res.getStatusCode() + ' - ' + res.getStatus());
-        }
-    }
-*/
 
 }

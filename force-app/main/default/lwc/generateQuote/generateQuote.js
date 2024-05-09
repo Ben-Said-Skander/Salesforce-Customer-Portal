@@ -1,8 +1,8 @@
 import { LightningElement ,track,wire } from 'lwc';
 import hasSyncedQuote from '@salesforce/apex/OpportunityController.hasSyncedQuote';
-//import callCongaAPI from '@salesforce/apex/OpportunityController.callCongaAPI';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getSyncQuoteId from '@salesforce/apex/QuoteController.getSyncQuoteId';
+import generateQuote from '@salesforce/apex/QuoteController.generateQuote';
 
 export default class GenerateQuote extends LightningElement {
 
@@ -42,34 +42,26 @@ export default class GenerateQuote extends LightningElement {
         console.log(error)
        }
 }
-    /*
-    window.open('/apex/APXTConga4__Conga_Composer?SolMgr=1&serverUrl={!API.Partner_Server_URL_520}&Id='+
-    this.oppId+'&QueryId=[lineItems]0Q_014MAQ247304&TemplateId=0T_020MAQ054658&DS7=1&DS7Preview=1&DefaultPDF=1');
-    */
 
-  
     openPDF() { 
         getSyncQuoteId({ opportunityId: this.oppId })
         .then(result => {
             this.quoteId = result;
             console.log(this.quoteId);
+
+               generateQuote({ opportunityId: this.oppId })
+               .then(result2 => {
+                    console.log(result2);
+               }).catch(error => {
+                    console.error('Error generating quote : ', error);
+               });
+
             this.openPDFPreview = true;
         }).catch(error => {
             console.error('Error getting quote id: ', error);
         });
     }
     
-
-        /*
-        callCongaAPI()
-            .then(result => {
-                console.log('Success: ', result);
-                this.showToast('Success', 'PDF created successfully', 'success');
-            })
-            .catch(error => {
-                console.error('Error calling Conga API: ', error);
-                this.showToast('Error', error.message, 'error');
-            });*/
     
     showToast(title, message, variant) {
         const event = new ShowToastEvent({

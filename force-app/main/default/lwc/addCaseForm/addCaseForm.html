@@ -41,15 +41,37 @@
                 <div>
                     <template if:true={selectedOpportunityId}>
                         <label class="slds-form-element__label slds-m-top_small">Catalogue des produits</label>
-                        <lightning-datatable
-                            id="datatable2"
-                            key-field="Id"
-                            data={opportunityProducts}
-                            columns={productColumns}
-                            onrowselection={handleRowSelection}>
-                        </lightning-datatable>
+                       
+                   
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nom de Produit</th>
+                                        <th>Quantite</th>
+                                        <th>Prix Unitaire</th>
+                                        <th>Prix Totale</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={opportunityProducts} for:item="product">
+                                        <tr key={product.Id} onclick={handleRowSelection} data-product-id={product.OpportunityLineItemId}>
+                                            <td>
+                                                <input type="radio" name="selectedProduct" data-product-id={product.OpportunityLineItemId}>
+                                            </td>
+                                            <td>{product.Name}</td>
+                                            <td>{product.Quantity}</td>
+                                            <td>{product.UnitPrice}</td>
+                                            <td>{product.TotalPrice}</td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </template>
+                        
+                  
 
-                    </template>
+                   
                     </div>
                     
 

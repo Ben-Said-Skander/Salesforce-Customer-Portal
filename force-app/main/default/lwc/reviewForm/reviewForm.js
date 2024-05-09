@@ -88,13 +88,6 @@ export default class ReviewForm extends NavigationMixin(LightningElement) {
                 );
 
                 window.location.href = '/lightning/page/home';
-                /*
-                this[NavigationMixin.Navigate]({
-                    type: 'standard__navItemPage',
-                    attributes: {
-                        apiName: 'Liste_des_demandes'
-                    }
-                }); */
             })
             .catch(error => {
                 console.error('Error creating the case :', error);
@@ -144,7 +137,6 @@ export default class ReviewForm extends NavigationMixin(LightningElement) {
     }
        
     handleEdit(){
-
         this.reviewFormData = {
             edited_subject: this.subject,
             edited_description: this.description,
@@ -157,8 +149,7 @@ export default class ReviewForm extends NavigationMixin(LightningElement) {
         };
 
         console.log('***************************************')
-        console.log(this.reviewFormData.edited_tag_options)
-        
+        console.log(this.reviewFormData.edited_tag_options)        
         this.isSelected=true ;
     }
 
