@@ -5,7 +5,8 @@ import hasOpenCase from '@salesforce/apex/CaseController.hasOpenCase';
 
 export default class WorkAroundSolutions extends LightningElement {
     @track articles;
-
+    @track filteredArticles;
+    @track searchQuery = '';
     @track isThereOpenCase = false;
 
     connectedCallback() {
@@ -25,10 +26,23 @@ export default class WorkAroundSolutions extends LightningElement {
     @wire(getArticlesByCaseType)
     wiredArticles({ error, data }) {
         if (data) {
-            this.articles = data;
+            this.articles = data.map(article => {
+                return {
+                    ...article,
+                    fullUrl: `https://empathetic-goat-j2hay1-dev-ed.trailblaze.lightning.force.com/lightning/r/Knowledge__kav/${article.Id}/view`
+                };
+            });
+            this.filteredArticles = this.articles;
         } else if (error) {
             this.showToast('Error', error.body.message, 'error');
         }
+    }
+
+    handleSearch(event) {
+        this.searchQuery = event.target.value.toLowerCase();
+        this.filteredArticles = this.articles.filter(article =>
+            article.Title.toLowerCase().includes(this.searchQuery)
+        );
     }
 
     showToast(title, message, variant) {
@@ -41,6 +55,6 @@ export default class WorkAroundSolutions extends LightningElement {
     }
 
     get hasArticles() {
-        return this.articles && this.articles.length > 0;
+        return this.filteredArticles && this.filteredArticles.length > 0;
     }
 }

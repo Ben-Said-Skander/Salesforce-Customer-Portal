@@ -5,7 +5,6 @@ public with sharing class CommentController {
     public static void createNewCommentAgent(String comment,Boolean isPublic) {
         try {
             String userEmail = UserInfo.getUserEmail();
-    
             Case relatedCase = [SELECT Id
                                 FROM Case 
                                 WHERE Contact.Email = :userEmail AND IsClosed = false
@@ -17,7 +16,7 @@ public with sharing class CommentController {
                 CommentBody = comment,
                 IsPublished = isPublic
             );
-            
+      
             insert newComment;
         } catch(Exception e) {
             throw new AuraHandledException('Error creating a note: ' + e.getMessage());

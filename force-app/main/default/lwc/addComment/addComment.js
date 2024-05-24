@@ -11,14 +11,14 @@ export default class AddNote extends LightningElement {
 
     handleAjout() {
         if (!this.commentBody) {
-            this.showToast('Error', 'Les commentaires et notes ne doivent pas être vides.', 'error');
+            this.showToast('Erreur', 'Les commentaires et notes ne doivent pas être vides.', 'error');
         } else {
             console.log('Comment Body:', this.commentBody);
             createNewCommentClient({
                     comment: this.commentBody,
                 })
                 .then(() => {
-                    this.showToast('Success', 'Commentaire ajoutée avec succès', 'success');
+                    this.showToast('Succès', 'Commentaire ajoutée avec succès', 'success');
 
                     const commentAddedEvent = new CustomEvent('commentadded');
                     this.dispatchEvent(commentAddedEvent);
@@ -27,7 +27,7 @@ export default class AddNote extends LightningElement {
                 })
                 .catch(error => {
                     console.error('Echec de l ajout de la commentaire ', error);
-                    this.showToast('Error', 'Veuillez remplir tous les champs requis.', 'error');
+                    this.showToast('Erreur', 'Veuillez remplir tous les champs requis.', 'error');
                 });
         }
     }

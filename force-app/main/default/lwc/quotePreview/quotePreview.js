@@ -1,5 +1,5 @@
 import { LightningElement, track,api } from 'lwc';
-import deleteLatestAttachment from '@salesforce/apex/OpportunityController.deleteLatestAttachment';
+import deleteLatestDocument from '@salesforce/apex/QuoteController.deleteLatestDocument';
 import submitForApproval from '@salesforce/apex/QuoteController.submitForApproval';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getLatestQuoteContentDocumentId from '@salesforce/apex/QuoteController.getLatestQuoteContentDocumentId';
@@ -33,7 +33,7 @@ export default class QuotePreview extends LightningElement {
     }
 
     handleCancel() {
-        deleteLatestAttachment({ opportunityId: this.opportunity_id })
+        deleteLatestDocument({ opportunityId: this.opportunity_id })
             .then(result => {
                 console.log('Deleting attachment was successful',result);
                 window.location.href = '/lightning/r/Opportunity/'+this.opportunity_id+'/view';
@@ -51,7 +51,7 @@ export default class QuotePreview extends LightningElement {
         submitForApproval({ quoteId: this.quote_id })
             .then(result => {
                 console.log('Quote submitted for approval successfully', result);
-                this.showToast('Success', 'Quote submitted for approval successfully', 'success');
+                this.showToast('Succès', 'Devis a ete soumis pour approbation avec succès', 'success');
                 window.location.href = '/lightning/r/Opportunity/'+this.opportunity_id+'/view';
             })
             .catch(error => {

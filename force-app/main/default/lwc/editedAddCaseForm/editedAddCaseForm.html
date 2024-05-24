@@ -4,7 +4,20 @@
            
             <div class="slds-p-around_medium">
                
-                <lightning-input label="Sujet" value={subject} onchange={handleSubjectChange}></lightning-input>
+                <template if:false={otherSubject}>
+                    <lightning-combobox 
+                      label="Sujet de la Demande" 
+                      value={type} 
+                      options={typeOptions} 
+                      placeholder="Sélectionnez une option"
+                      onchange={handleTypeChange}>
+                    </lightning-combobox>
+                  </template>
+  
+                  <template if:true={otherSubject}>
+                      <lightning-input label="Sujet" value={subject} onchange={handleSubjectChange}></lightning-input>
+                  </template>
+
                 <lightning-input label="Description" value={description} onchange={handleDescriptionChange}></lightning-input>
                 <lightning-combobox 
                     label="Priorité"
@@ -14,46 +27,129 @@
                     onchange={handlePriorityChange}>
                 </lightning-combobox>
                 
-                <lightning-combobox 
-                    label="Type de Problème" 
-                    value={type} 
-                    options={typeOptions} 
-                    placeholder="Sélectionnez une option"
-                    onchange={handleTypeChange}>
-                </lightning-combobox>
+                <template if:true={typeChosen}>
+                <label class="slds-form-element__label slds-m-top_small">Problème possible</label>
+                <div class="custom-checkbox-group">
 
+                    <template if:true={problem1}>
+                    <lightning-checkbox-group
+                        name="problemTypes"
+                        options={problemTagOption1}
+                        value={selectedProblemTags}
+                        onchange={handleTagChange}
+                        class="typeOptions"
+                    ></lightning-checkbox-group>
+                    </template>
 
-                <label class="slds-form-element__label slds-m-top_small">Type de problème</label>
-                <lightning-checkbox-group 
-                   name="problemTypes" 
-                   options={problemTagOptions} 
-                   value={selectedProblemTags} 
-                   onchange={handleTagChange} 
-                   class="typeOptions">
-                </lightning-checkbox-group>
+                    <template if:true={problem2}>
+                        <lightning-checkbox-group
+                            name="problemTypes"
+                            options={problemTagOption2}
+                            value={selectedProblemTags}
+                            onchange={handleTagChange}
+                            class="typeOptions"
+                        ></lightning-checkbox-group>
+                    </template>
+
+                    <template if:true={problem3}>
+                            <lightning-checkbox-group
+                                name="problemTypes"
+                                options={problemTagOption3}
+                                value={selectedProblemTags}
+                                onchange={handleTagChange}
+                                class="typeOptions"
+                            ></lightning-checkbox-group>
+                    </template>
+
+                    <template if:true={problem4}>
+                                <lightning-checkbox-group
+                                    name="problemTypes"
+                                    options={problemTagOption4}
+                                    value={selectedProblemTags}
+                                    onchange={handleTagChange}
+                                    class="typeOptions"
+                                ></lightning-checkbox-group>
+                    </template>
+
+                    <template if:true={problem5}>
+                        <lightning-checkbox-group
+                            name="problemTypes"
+                            options={problemTagOption4}
+                            value={selectedProblemTags}
+                            onchange={handleTagChange}
+                            class="typeOptions"
+                        ></lightning-checkbox-group>
+                    </template>
+               
+                </div>
+                </template>
             
                
                 <label class="slds-form-element__label slds-m-top_small">Liste des affaires</label>
-                <div>
-                    <lightning-datatable
-                    key-field="Id"
-                    data={opportunities}
-                    columns={columns}
-                    onrowaction={handleRowAction}
-                    hide-checkbox-column="true"
-                ></lightning-datatable>
+                <div class="tableContainer">
+                    <table class="styled-table">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Nom">Nom</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Statut">Statut</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Date de clôture">Date de clôture</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Actions">Opportunité choisie</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={opportunities} for:item="opportunity">
+                                <tr key={opportunity.Id}>
+                                    <td>{opportunity.Name}</td>
+                                    <td>{opportunity.StageName}</td>
+                                    <td>{opportunity.CloseDate}</td>
+                                    <td>
+                                        <lightning-button label="Selectionner" onclick={handleSelect} data-id={opportunity.Id} ></lightning-button>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
                 </div>
      
                 <div>
                     <template if:true={selectedOpportunityId}>
                         <label class="slds-form-element__label slds-m-top_small">Catalogue des produits</label>
-                        <lightning-datatable
-                            id="datatable2"
-                            key-field="Id"
-                            data={opportunityProducts}
-                            columns={productColumns}
-                            onrowselection={handleRowSelection}>
-                        </lightning-datatable>
+                        <div class="tableContainer">
+
+                            <table class="styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Nom de Produit</th>
+                                            <th>Quantite</th>
+                                            <th>Prix Unitaire</th>
+                                            <th>Prix Totale</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={opportunityProducts} for:item="product">
+                                            <tr key={product.Id} onclick={handleRowSelection} data-product-id={product.OpportunityLineItemId}>
+                                                <td>
+                                                    <input type="radio" name="selectedProduct" data-product-id={product.OpportunityLineItemId}>
+                                                </td>
+                                                <td>{product.Name}</td>
+                                                <td>{product.Quantity}</td>
+                                                <td>{product.UnitPrice}</td>
+                                                <td>{product.TotalPrice}</td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                                
+                       </div>
 
                     </template>
                     </div>

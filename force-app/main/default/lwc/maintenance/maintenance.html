@@ -2,22 +2,58 @@
     <lightning-card >
 
         <div class="slds-grid slds-grid_vertical-align-center">
-            <h1 class="title">Trust Maintenance Information</h1>
+            <h1 class="title">Historique des maintenances </h1>
             <div class="slds-grid slds-grid_align-end slds-p-top_medium">
                 <div class="slds-col" style="margin-left: 90px;">
-                    <lightning-button label="Check Release updates" onclick={handleReleaseUpdate} ></lightning-button>
+                    <lightning-button label="Consulter les Mises à jour de version" onclick={handleReleaseUpdate} ></lightning-button>
                 </div>
             </div>
         </div>
 
-        <div class="dataTable">
-            <lightning-datatable
-            key-field="id"
-            data={data}
-            columns={columns}
-            hide-checkbox-column
-        ></lightning-datatable>
-        </div>
+        
+            <div class="data_table">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Objet</th>
+                            <th>Type</th>
+                            <th>Statut</th>
+                            <th>Date</th>
+                            <th>Services</th>
+                            <th>État</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={data} for:item="item">
+                            <tr key={item.id}>
+                                <td>{item.name}</td>
+                                <td>{item.maintenanceType}</td>
+                                <td>{item.eventStatus}</td>
+                                <td>{item.plannedStartTime}</td>
+                                <td>{item.serviceKeys}</td>
+                                <td>
+                                    
+                                    <template if:true={item.passStatus}>
+                                        <div class="slds-grid slds-grid_vertical-align-center">
+                                            <lightning-icon icon-name="utility:check" size="small" class="green-utility-icon"></lightning-icon>
+                                        </div>
+                                       
+                                    </template>
+                                    <template if:false={item.passStatus}>
+                                        <div class="slds-grid slds-grid_vertical-align-center">
+                                        <lightning-icon icon-name="utility:clock" size="small" class="green-icon"></lightning-icon>
+                                        </div>
+                                    </template>
+                                   
+                                </td>
+                                
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+   
+        
    </lightning-card>
         
 

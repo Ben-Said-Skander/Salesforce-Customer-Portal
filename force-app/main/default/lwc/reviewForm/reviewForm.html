@@ -34,25 +34,20 @@
         </lightning-card>
 
         <lightning-card title="Priorité">
-        <div class="slds-form-element__control slds-grid slds-wrap">*
+        <div class="slds-form-element__control slds-grid slds-wrap">
             <h3>{priority}</h3>
             <lightning-button-icon icon-name="utility:edit" onclick={handleEdit}></lightning-button-icon>
         </div>
         </lightning-card>
 
-        <lightning-card title="Type de probleme">
-            <div class="slds-form-element__control slds-grid slds-wrap">*
-                <h3>{type_options}</h3>
-                <lightning-button-icon icon-name="utility:edit" onclick={handleEdit}></lightning-button-icon>
-            </div>
-            </lightning-card>
-
-        <lightning-card title="Type de Problème">
+        <template if:false={isThereATag}>
+        <lightning-card title="Problème possible">
         <div class="slds-form-element__control slds-grid slds-wrap">
             <h3>{tag_options}</h3>
             <lightning-button-icon icon-name="utility:edit" onclick={handleEdit}></lightning-button-icon>
         </div>
         </lightning-card>
+        </template>
 
         <lightning-card title="Produit">
         <div class="slds-form-element__control slds-grid slds-wrap">

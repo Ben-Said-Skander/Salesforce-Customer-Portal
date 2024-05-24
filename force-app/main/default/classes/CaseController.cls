@@ -87,6 +87,9 @@ public with sharing class CaseController {
     @AuraEnabled
     public static void createCaseWithAttachment(String subject,String type ,String entitlementId, String priority, String description, Id contactId, Id opportunityProductId, String imageData, String problemTypes) {
             
+        Contact contact = [SELECT AccountId FROM Contact WHERE Id = :contactId LIMIT 1];
+        Id accountId = contact.AccountId;
+
         Case newCase = new Case(
             Subject = subject,
             Priority = priority,
@@ -95,8 +98,9 @@ public with sharing class CaseController {
             Origin = 'Web',
             Status = 'Nouvelle',
             ContactId = contactId,
+            AccountId = accountId,
             Opportunity_Product__c = opportunityProductId,
-            Problem_Type__c = problemTypes ,
+            Problem_Tag__c = problemTypes ,
             EntitlementId = entitlementId
         );
         insert newCase;
@@ -112,6 +116,9 @@ public with sharing class CaseController {
     @AuraEnabled
     public static void createCaseWithoutAttachment(String subject,String type , String entitlementId, String priority, String description, Id contactId, Id opportunityProductId, String problemTypes) {
             
+        Contact contact = [SELECT AccountId FROM Contact WHERE Id = :contactId LIMIT 1];
+        Id accountId = contact.AccountId;
+       
         Case newCase = new Case(
             Subject = subject,
             Priority = priority,
@@ -120,8 +127,9 @@ public with sharing class CaseController {
             Origin = 'Web',
             Status = 'Nouvelle',
             ContactId = contactId,
+            AccountId = accountId,
             Opportunity_Product__c = opportunityProductId,
-            Problem_Type__c = problemTypes ,
+            Problem_Tag__c = problemTypes ,
             EntitlementId = entitlementId
         );
         insert newCase;

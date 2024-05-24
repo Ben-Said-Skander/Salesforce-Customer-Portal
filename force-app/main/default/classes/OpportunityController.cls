@@ -9,14 +9,6 @@ public with sharing class OpportunityController {
 
     }
 
-    @AuraEnabled
-    public static void deleteLatestAttachment(Id opportunityId) {
-        Attachment attachment = [SELECT Id, Body FROM Attachment WHERE ParentId = :opportunityId ORDER BY CreatedDate DESC LIMIT 1];
-        delete attachment ;
-    }
-
-
-
     @AuraEnabled(cacheable=true)
     public static Boolean hasSyncedQuote(String opportunityId) {
         String userEmail = UserInfo.getUserEmail();
@@ -28,7 +20,7 @@ public with sharing class OpportunityController {
 
     @AuraEnabled(cacheable=true)
     public static List<OpportunityLineItem> getOpportunityProducts(String opportunityId) {
-        return [SELECT Id, Name, Quantity, UnitPrice, TotalPrice,Product2Id,Product2.Name FROM OpportunityLineItem WHERE OpportunityId = :opportunityId];
+        return [SELECT Id, Name, Quantity, UnitPrice, TotalPrice,Product2Id,Product2.Name ,Product2.Description FROM OpportunityLineItem WHERE OpportunityId = :opportunityId];
     }
     
 

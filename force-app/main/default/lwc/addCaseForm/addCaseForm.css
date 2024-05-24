@@ -2,46 +2,64 @@
     margin-top: 3px; 
     padding-top:5px ;
 }
-.opp_table{
-    margin-top: 20px; 
-    padding-top:20px ;
-}
-.data_table{
-    margin-top: 20px; 
-    padding-top:20px ;
-}
-.slds-grid_align-end {
-    justify-content: flex-end;
-}
-.typeOptions{
-    margin-left: 10px;
-    margin-top: 8px; 
+.tableContainer{
+    margin-right: 15px;
 }
 .styled-table {
     border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.9em;
+    margin: 25px 0; 
+    font-size: 13px;
     font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
+
 .styled-table thead tr {
-    background-color: #009879;
+    background-color: #0B5ED8;
     color: #ffffff;
     text-align: left;
 }
+
 .styled-table th,
 .styled-table td {
-    padding: 12px 15px;
+    padding: 8px 15px; 
+    font-size: 12px;
 }
+
 .styled-table tbody tr {
     border-bottom: 1px solid #dddddd;
 }
 
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #0B5ED8;
 }
 
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+
+.custom-checkbox-group {
+    border: 1px solid #d8dde6;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+    background-color: #f4f6f9;
+    max-width: 600px;
+    margin-left: 12px;
+    margin-top: 10px;
+}
+
+.custom-checkbox-group .slds-checkbox {
+    margin: 0.5rem 0;
+}
+
+.custom-checkbox-group .slds-checkbox__label {
+    font-weight: bold;
+    color: #4b4b4b;
+}
+
+.custom-checkbox-group .slds-checkbox_faux {
+    border-radius: 0.25rem;
+    background-color: #ffffff;
+    border: 1px solid #d8dde6;
+}
+
+.custom-checkbox-group .slds-checkbox_faux:hover {
+    background-color: #e0e0e0;
 }

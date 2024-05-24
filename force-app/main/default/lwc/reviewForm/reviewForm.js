@@ -22,13 +22,19 @@ export default class ReviewForm extends NavigationMixin(LightningElement) {
     @track niveauDeSupport
 
     @track typeValuesString = '';
-    @track entitlementId
+    @track entitlementId ;
+
+    @track isThereATag = false ;
 
     @track imageSrc ;
 
 
     connectedCallback() {
         this.retrieveUserContactId();
+        if(this.tag_options===''){
+            console.log('***** Tag :'+this.tag_options)
+            this.isThereATag = true ;
+        }
     }
 
     retrieveUserContactId() {
@@ -81,8 +87,8 @@ export default class ReviewForm extends NavigationMixin(LightningElement) {
             .then(() => {
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Case created',
+                        title: 'Succès',
+                        message: 'Demande creé avec succès. ',
                         variant: 'success'
                     })
                 );
@@ -93,7 +99,7 @@ export default class ReviewForm extends NavigationMixin(LightningElement) {
                 console.error('Error creating the case :', error);
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Error',
+                        title: 'Erreur',
                         message: error.body.message,
                         variant: 'error'
                     })
@@ -117,7 +123,7 @@ export default class ReviewForm extends NavigationMixin(LightningElement) {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'Demande créée avec succès.',
+                        message: 'Demande creé avec succès.',
                         variant: 'success'
                     })
                 );
@@ -127,7 +133,7 @@ export default class ReviewForm extends NavigationMixin(LightningElement) {
                 console.error('Error creating the case :', error);
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Error',
+                        title: 'Erreur',
                         message: error.body.message,
                         variant: 'error'
                     })

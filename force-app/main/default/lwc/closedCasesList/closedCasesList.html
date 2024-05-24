@@ -1,21 +1,76 @@
 <template>
+    <template if:false={isCaseSelected}>
+        <lightning-card title="Liste Des demandes fermées">
 
-<template if:false={isCaseSelected}>
-    <lightning-card title="Liste Des demandes fermées">
-                  
-        <lightning-datatable
-           key-field="Id"
-           data={closedCases}
-           columns={columns}
-           onrowaction={handleRowAction}
-         hide-checkbox-column="true"
-       ></lightning-datatable>
-   
-    </lightning-card>
-</template>
+            <div class="tableContainer">
+                <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Sujet">Sujet</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Produit">Produit</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Priorité">Priorité</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Date de clôture">Date de clôture</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Note Attribue sur le service">Note Attribuée sur le service</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Sélectionné">Demande Sélectionné</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={closedCases} for:item="closedCase">
+                        <tr key={closedCase.Id}>
+                            <td>
+                                <div class="slds-truncate" title={closedCase.Subject}>{closedCase.Subject}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title={closedCase.Opportunity_Product_Name}>{closedCase.Opportunity_Product_Name}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title={closedCase.Priority}>{closedCase.Priority}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title={closedCase.ClosedDate}>{closedCase.ClosedDate}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title={closedCase.Rating__c}>
+                                    <template if:true={closedCase.stars}>
+                                        <template for:each={closedCase.stars} for:item="star">
+                                            <lightning-icon
+                                                key={star.Index}
+                                                icon-name="utility:favorite"
+                                                variant={star.State}
+                                                size={size} >
+                                            </lightning-icon>
+                                        </template>
+                                    </template>
+                                    <template if:false={closedCase.stars}>
+                                        <span>Enquête pas encore remplie</span>
+                                    </template>
+                                </div>
+                            </td>
+                            <td>
+                                <button class={closedCase.buttonVariant} data-id={closedCase.Id} onclick={handleButtonClick}>Selectionner</button>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
 
-<template if:true={isCaseSelected}>
-    <c-add-survey case_id={selectedCaseId} ></c-add-survey>
-</template>
+        </lightning-card>
+    </template>
 
+    <template if:true={isCaseSelected}>
+        <c-add-survey case_id={selectedCaseId}></c-add-survey>
+    </template>
 </template>

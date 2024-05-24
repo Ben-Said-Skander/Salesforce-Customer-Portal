@@ -11,15 +11,14 @@ public with sharing class TestExecutionHelper {
             item.ApexClassId = testClass.Id;
             testQueueItems.add(item);
         }
-
         if (!testQueueItems.isEmpty()) {
             insert testQueueItems;
-            //
             return testQueueItems[0].TestRunResultId;
         } else {
             return 'No test classes found in your namespace.';
         }
     }
+    //Whats your next move ?    Discover more articles    Talk to an agent     End Chat
 
     @AuraEnabled
     public static String runTestsInNamespace() {
@@ -32,10 +31,8 @@ public with sharing class TestExecutionHelper {
             item.ApexClassId = testClass.Id;
             testQueueItems.add(item);
         }
-
         if (!testQueueItems.isEmpty()) {
             insert testQueueItems;
-            //
             return testQueueItems[0].TestRunResultId;
         } else {
             return 'No test classes found in your namespace.';
@@ -89,9 +86,10 @@ public with sharing class TestExecutionHelper {
 
     @AuraEnabled(cacheable=true)
     public static List<Object> getTrustMaintenanceInfo() {
-        
+
+        String instanceName = [select InstanceName from Organization limit 1].InstanceName;
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('https://api.status.salesforce.com/v1/maintenances?instance=SWE42&limit=30&offset=0');
+        request.setEndpoint('https://api.status.salesforce.com/v1/maintenances?instance='+instanceName+'&limit=30&offset=0');
         request.setMethod('GET');
         request.setHeader('Authorization', 'Bearer ' + UserInfo.getSessionId());
         

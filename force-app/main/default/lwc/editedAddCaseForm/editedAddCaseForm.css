@@ -1,6 +1,6 @@
-.returnButton{
-    margin-right: 10px;
-    padding-right: 20px;
+.slds-text-align_center {
+    margin-top: 3px; 
+    padding-top:5px ;
 }
 .tableContainer{
     margin-left: 15px;
@@ -33,31 +33,4 @@
 
 .styled-table tbody tr:last-of-type {
     border-bottom: 2px solid #0B5ED8;
-}
-
-.grey-button {
-    display: inline-block;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    background-color: #4c4c4c82;
-    border-radius: 35px;
-    padding: 8px 16px;
-    font-size: 12px;
-    color: #1c1c1c;
-    line-height: 17px;
-}
-
-
-.normal-button {
-    display: inline-block;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    background-color: #4299e1;
-    border-radius: 35px;
-    padding: 8px 16px;
-    font-size: 12px;
-    color: white;
-    line-height: 17px;
 }

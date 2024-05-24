@@ -1,6 +1,6 @@
+/* eslint-disable @lwc/lwc/no-async-operation */
 import { LightningElement ,track,wire } from 'lwc';
 import hasSyncedQuote from '@salesforce/apex/OpportunityController.hasSyncedQuote';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getSyncQuoteId from '@salesforce/apex/QuoteController.getSyncQuoteId';
 import generateQuote from '@salesforce/apex/QuoteController.generateQuote';
 
@@ -10,6 +10,7 @@ export default class GenerateQuote extends LightningElement {
     @track quoteId;
     @track isAtLeastOneQuoteSyncing = false;
     @track openPDFPreview=false
+    @track showSpinner=false ;
 
     connectedCallback() {
       this.getOpportunityIdFromUrl();
@@ -26,7 +27,6 @@ export default class GenerateQuote extends LightningElement {
           if (endPos !== -1) {
               this.oppId = url.substring(startPos + searchString.length, endPos);
           } else {
-              // If there's no '&' after the Opportunity ID, extract until the end of the URL
               this.oppId = url.substring(startPos + searchString.length);
           }
       } else {
@@ -43,35 +43,34 @@ export default class GenerateQuote extends LightningElement {
        }
 }
 
-    openPDF() { 
-        getSyncQuoteId({ opportunityId: this.oppId })
-        .then(result => {
-            this.quoteId = result;
-            console.log(this.quoteId);
+openPDF() {
+    this.showSpinner = true; // Set flag to show spinner
 
-               generateQuote({ opportunityId: this.oppId })
-               .then(result2 => {
-                    console.log(result2);
-               }).catch(error => {
-                    console.error('Error generating quote : ', error);
-               });
+    getSyncQuoteId({ opportunityId: this.oppId })
+    .then(result => {
+        this.quoteId = result;
+        console.log(this.quoteId);
 
-            this.openPDFPreview = true;
+        generateQuote({ opportunityId: this.oppId })
+        .then(result2 => {
+            console.log(result2);
+
+            setTimeout(() => {
+                this.openPDFPreview = true;
+                console.log('************ Sucess ***************')
+                this.showSpinner = false; 
+            }, 35000); 
+
         }).catch(error => {
-            console.error('Error getting quote id: ', error);
+            console.error('Error generating quote : ', error);
+            this.showSpinner = false; 
         });
-    }
-    
-    
-    showToast(title, message, variant) {
-        const event = new ShowToastEvent({
-            title: title,
-            message: message,
-            variant: variant,
-        });
-        this.dispatchEvent(event);
-    }
 
+    }).catch(error => {
+        console.error('Error getting quote id: ', error);
+        this.showSpinner = false; 
+    });
+}
 
  }
 

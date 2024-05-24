@@ -76,12 +76,12 @@ export default class EnqueteSatisfaction extends LightningElement {
 
     createSurvey() {
         if (!this.question1 || !this.question2 || !this.question3 || !this.rating) {
-            this.showToast('Error', 'Veuillez répondre à toutes les questions requises.', 'error');
+            this.showToast('Erreur', 'Veuillez répondre à toutes les questions requises.', 'error');
             return;
         }
     
         if (!this.case_id) {
-            this.showToast('Error', 'Case Id is missing.', 'error');
+            this.showToast('Erreur', 'Case Id is missing.', 'error');
             return;
         }
     
@@ -95,12 +95,13 @@ export default class EnqueteSatisfaction extends LightningElement {
             rating:this.rating
         })
         .then(() => {
-            this.showToast('Success', 'Enquete remplie avec succès.', 'success');
-            this.isSurveySaved = true; 
+            this.showToast('Succès', 'Enquete remplie avec succès.', 'success');
+            window.location.href = '/lightning/n/Satisfaction_Client';
+           
         })
         .catch(error => {
             console.error('Error creating survey:', error);
-            this.showToast('Error', 'Veuillez remplir tous les champs requis .', 'error');
+            this.showToast('Erreur', 'Veuillez remplir tous les champs requis .', 'error');
         });
     }
     

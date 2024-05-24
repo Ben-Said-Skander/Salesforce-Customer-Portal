@@ -31,6 +31,7 @@ const PRODUCT_COLUMNS = [
 
 
 export default class EditedAddCaseForm extends NavigationMixin(LightningElement) {
+    
     priorityOptions = [
         { label: 'Faible', value: 'Faible' },
         { label: 'Moyenne', value: 'Moyenne' },
@@ -38,22 +39,41 @@ export default class EditedAddCaseForm extends NavigationMixin(LightningElement)
     ];
     
     typeOptions = [     
-        { label: 'Problème électronique', value: 'Hardware' },
-        { label: 'Problème logiciel', value: 'Software' },
-        { label: 'Autre', value: 'Other' }
+        { label: 'Problèmes Techniques', value: 'Problèmes Techniques' },
+        { label: 'Maintenance et Réparations', value: 'Maintenance et Réparations' },
+        { label: 'Formation et Support Utilisateur', value: 'Formation et Support Utilisateur' },
+        { label: 'Personnalisation des Équipements', value: 'Personnalisation des Équipements' },
+        { label: 'Autre', value: 'Autre' }
     ];
     
     
-    problemTagOptions = [
-        { label: 'Problème de démarrage du moteur', value: 'Problème de démarrage du moteur' },
-        { label: 'Bruits anormaux du moteur', value: 'Bruits anormaux du moteur' },
+    problemTagOption1 = [
+        { label: 'Dysfonctionnements des équipements d imagerie (CT, IRM, échographie)', value: 'Dysfonctionnements des équipements d imagerie (CT, IRM, échographie)' },
+        { label: 'Pannes de ventilateurs ou autres dispositifs respiratoires', value: 'Pannes de ventilateurs ou autres dispositifs respiratoires' },
         { label: 'Problème de calibrage du tableau de bord', value: 'Problème de calibrage du tableau de bord' },
         { label: 'Défaillance des feux de signalisation', value: 'Défaillance des feux de signalisation' },
-        { label: 'Incompatibilité avec un système électronique(Bluetooth..)', value: 'Incompatibilité avec un système électronique(Bluetooth..)' },
-        { label: 'Problème de fuite de liquide', value: 'Problème de fuite de liquide' },
-        { label: 'Problème de surchauffe du moteur', value: 'Problème de surchauffe du moteur' },
-        { label: 'Problème de climatisation', value: 'Problème de climatisation' },
-        { label: 'Problème de carrosserie', value: 'Problème de carrosserie' },
+        { label: 'Problèmes de connectivité avec les moniteurs de signes vitaux', value: 'Problèmes de connectivité avec les moniteurs de signes vitaux' },
+        { label: 'Problème de surchauffe du machine', value: 'Problème de surchauffe du machine' },
+        { label: 'Autre', value: 'Autre' },
+    ];
+
+    problemTagOption2 = [
+        { label: 'Demandes de maintenance préventive des équipements', value: 'Demandes de maintenance préventive des équipements)' },
+        { label: 'Besoin de réparations urgentes sur les dispositifs médicaux', value: 'Besoin de réparations urgentes sur les dispositifs médicaux' },
+        { label: 'Autre', value: 'Autre' },
+    ];
+ 
+    problemTagOption3 = [
+        { label: 'Besoin de formation pour le personnel sur les nouveaux équipements', value: 'Besoin de formation pour le personnel sur les nouveaux équipements' },
+        { label: 'Besoin de Support utilisateur pour le logiciels des nouvelles machine', value: 'Besoin de Support utilisateur pour les logiciels des nouvelles machine' },
+        { label: 'Formation sur l interprétation des données médicales fournies par les équipements', value: 'Formation sur l interprétation des données médicales fournies par les équipements' },
+        { label: 'Demandes de manuels d utilisation ou de guides techniques', value: 'Demandes de manuels d utilisation ou de guides techniques' },
+        { label: 'Autre', value: 'Autre' },
+    ];
+
+    problemTagOption4 = [
+        { label: 'Demandes de configuration spécifique pour les appareils médicaux', value: 'Demandes de configuration spécifique pour les appareils médicaux' },
+        { label: 'Besoin d accessoires ou de pièces de rechange', value: 'Besoin d accessoires ou de pièces de rechange' },
         { label: 'Autre', value: 'Autre' },
     ];
 
@@ -92,10 +112,16 @@ export default class EditedAddCaseForm extends NavigationMixin(LightningElement)
     @track reviewFormData = {};
 
     @track selectedProblemTags = [];
-
-
     @track formattedString = [] ;
 
+    @track problem1 =false ; 
+    @track problem2 =false ; 
+    @track problem3 =false ; 
+    @track problem4 =false ; 
+    @track problem5 =false ; 
+    @track typeChosen =false ; 
+    @track otherSubject = false ;
+    
     @wire(getOpportunities)
     wiredOpportunities({ error, data }) {
         if (data) {
@@ -128,20 +154,22 @@ export default class EditedAddCaseForm extends NavigationMixin(LightningElement)
         this.productName= this.edited_product;
     }
 
-    async handleSelect(row) {
-        this.selectedOpportunityId = row.Id;
-        try {
-            const result = await getOpportunityProducts({ opportunityId: this.selectedOpportunityId });
-            this.opportunityProducts = result.map(item => ({
-                ...item,
-                OpportunityLineItemId: item.Id 
-            }));
-        } catch (error) {
-            this.showToast('Error', error.body.message, 'error');
-        }
-    }
-    
+    async handleSelect(event) {
+        this.selectedOpportunityId = event.target.dataset.id;
+       console.log('***************'+ this.selectedOpportunityId)
+       try {
+           const result = await getOpportunityProducts({ opportunityId:  this.selectedOpportunityId });
+           this.opportunityProducts = result.map(item => ({
+               ...item,
+               OpportunityLineItemId: item.Id 
+           }));
 
+       } catch (error) {
+           this.showToast('Error', error.body.message, 'error');
+       }
+   }
+   
+    
     handleRowSelection(event) {
         const selectedRows = event.detail.selectedRows;
         this.selectedProductLineItem = selectedRows.map(row => ({
@@ -154,7 +182,6 @@ export default class EditedAddCaseForm extends NavigationMixin(LightningElement)
         this.productName = this.selectedProductLineItem[0].productName ;
 
     }
-    
     
     handleImageChange(event) {
         const file = event.target.files[0];
@@ -175,7 +202,6 @@ export default class EditedAddCaseForm extends NavigationMixin(LightningElement)
     }
 
 
-     
     handleSubjectChange(event) {
         this.subject = event.target.value;
     }
@@ -187,9 +213,68 @@ export default class EditedAddCaseForm extends NavigationMixin(LightningElement)
     handleDescriptionChange(event) {
         this.description = event.target.value;
     }
-
     handleTypeChange(event) {
         this.type = event.detail.value;
+        switch(this.type){
+            case 'Problèmes Techniques' :
+                this.subject = 'Problèmes Techniques'
+                this.problem1=true ;
+                this.problem2=false ;
+                this.problem3=false ;
+                this.problem4=false ;
+                this.problem5=false ;
+                this.typeChosen = true ;
+                break ;
+            case 'Maintenance et Réparations' :
+                this.subject = 'Maintenance et Réparations'
+                this.problem1=false ; 
+                this.problem2=true ;
+                this.problem3=false ;
+                this.problem4=false ;
+                this.problem5=false ;
+                this.typeChosen = true ;
+                 break ;
+
+            case 'Formation et Support Utilisateur' :
+                this.subject = 'Formation et Support Utilisateur'
+                this.problem1=false ;
+                this.problem2=false ;
+                this.problem3=true ;
+                this.problem4=false ;
+                this.problem5=false ;
+                this.typeChosen = true ;
+                 break ;
+
+            case 'Personnalisation des Équipements' : 
+                this.subject = 'Personnalisation des Équipements'
+                this.problem4=true ;
+                this.problem1=false ;
+                this.problem2=false ;
+                this.problem3=false ;
+                this.problem5=false ;
+                this.typeChosen = true ;
+                 break ;
+
+            case 'Autre' : 
+                this.problem5=true ;
+                this.problem1=false ;
+                this.problem2=false ;
+                this.problem3=false ;
+                this.problem4=false ;
+                this.typeChosen = false ;
+                this.otherSubject = true ;   
+                this.subject ='' ;
+                this.selectedProblemTags=''             
+                break ;
+            
+            default: 
+                this.typeChosen = false ;
+                this.problem5=false ;
+                this.problem1=false ;
+                this.problem2=false ;
+                this.problem3=false ;
+                this.problem4=false ;
+        }
     }
 
     handleTagChange(event) {
@@ -202,7 +287,6 @@ export default class EditedAddCaseForm extends NavigationMixin(LightningElement)
             this.priority != null &&
             this.type != null &&
             this.productName != null &&
-            this.selectedProblemTags.length > 0 &&
             this.description != null
         ) {
 
@@ -221,9 +305,6 @@ export default class EditedAddCaseForm extends NavigationMixin(LightningElement)
                 tag: this.selectedProblemTags,
                 type:this.type
             };
-
-            
-    
         } else {
   
             const evt = new ShowToastEvent({

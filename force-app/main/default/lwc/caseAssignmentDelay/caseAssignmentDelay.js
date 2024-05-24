@@ -4,17 +4,18 @@ import { getRecord } from "lightning/uiRecordApi";
 
 export default class CaseAssignmentDelay extends LightningElement {
     @api recordId;
+    @track caseStatus;
     @track totalElapsedSeconds = 0;
-    @track totalSLATime ;
+    @track timeLeft;
+    @track newSLATime
+    @track slaTimeLeft
+    @track totalSLATime
     @track circleClass; 
 
-    slaTimeLeft = 0;
     hours = 0;
     minutes = 0;
     seconds = 0;
     interval;
-
-   
 
     connectedCallback() {
         this.getCaseIdFromUrl();
@@ -26,27 +27,32 @@ export default class CaseAssignmentDelay extends LightningElement {
         const caseIdIndex = parts.indexOf('Case') + 1;
         if (caseIdIndex > 0 && caseIdIndex < parts.length) {
             this.caseId = parts[caseIdIndex];
-            console.log(this.caseId);
         } else {
             console.error('Case ID not found in URL');
         }
+
+
+        
     }
 
-    @wire(getRecord, { recordId: '$caseId', fields: ["Case.Assignment_Delay__c", "Case.Status",'Case.SLA_Deadline__c'] })
+
+    @wire(getRecord, { recordId: '$caseId', fields: ['Case.Assignment_Delay__c', 'Case.Status'] })
     wiredRecord({ error, data }) {
         if (data) {
-            this.totalSLATime = data.fields.SLA_Deadline__c.value;
             this.slaTimeLeft = data.fields.Assignment_Delay__c.value;
-
+            this.caseStatus = data.fields.Status.value;
+         
             this.circleClass = 'green';
-            if (this.slaTimeLeft < 3600 ) {
-              
-               this.circleClass = 'red';
-               console.log(this.slaTimeLeft)
-           } 
 
             this.calculateTime(this.slaTimeLeft);
             this.startTimer();
+
+            if (this.slaTimeLeft < 3600 ) {
+               
+                this.circleClass = 'red';
+                console.log(this.slaTimeLeft)
+            } 
+          
         } else if (error) {
             console.error('Error loading record', error);
         }
@@ -57,7 +63,6 @@ export default class CaseAssignmentDelay extends LightningElement {
         this.minutes = Math.floor((timeInSeconds % 3600) / 60);
         this.seconds = Math.floor(timeInSeconds % 60);
     }
-
 
     startTimer() {
         this.interval = setInterval(() => {
@@ -80,7 +85,7 @@ export default class CaseAssignmentDelay extends LightningElement {
             }
         }, 1000);
     }
-
+    
     get formattedTime() {
         return `${this.pad(this.hours)}h ${this.pad(this.minutes)}m ${this.pad(this.seconds)}s`;
     }

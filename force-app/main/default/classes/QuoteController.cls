@@ -16,12 +16,11 @@ public with sharing class QuoteController {
     }
 
     @AuraEnabled
-    public static void deleteLatestAttachment(Id opportunityId) {
-        Attachment attachment = [SELECT Id, Body FROM Attachment WHERE ParentId = :opportunityId ORDER BY CreatedDate DESC LIMIT 1];
-        delete attachment ;
+    public static void deleteLatestDocument(Id opportunityId) {
+        ContentDocument latestDocument = [SELECT Id FROM ContentDocument ORDER BY CreatedDate DESC LIMIT 1] ;
+        delete latestDocument ;
     }
 
-    //SELECT Id FROM Quote WHERE OpportunityId= '006Qy0000048q1HIAQ' AND IsSyncing=true 
     @AuraEnabled(cacheable=true)
     public static Id getSyncQuoteId(String opportunityId) {
         Quote quote = [SELECT Id FROM Quote WHERE OpportunityId = :opportunityId AND IsSyncing = true LIMIT 1];
@@ -30,9 +29,8 @@ public with sharing class QuoteController {
 
     @AuraEnabled(cacheable=true)
     public static Id getLatestQuoteContentDocumentId(String opportunityId) {
-        
         Id contentDocumentId = null;
-        List<ContentDocumentLink> contentDocumentLinks = [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :opportunityId LIMIT 1];
+        List<ContentDocumentLink> contentDocumentLinks = [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :opportunityId ORDER BY ContentDocument.CreatedDate DESC LIMIT 1];
         if (!contentDocumentLinks.isEmpty()) {
             contentDocumentId = contentDocumentLinks[0].ContentDocumentId;
         }

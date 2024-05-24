@@ -37,7 +37,7 @@ export default class CaseComment extends LightningElement {
                 clientCreatedDate: this.formatDate(comment.Created_Date_Time__c),
             }));
         } else if (result.error) {
-            this.showToast('Error', result.error.body.message, 'error');
+            this.showToast('Erreur', result.error.body.message, 'error');
         }
     }
 
@@ -50,7 +50,7 @@ export default class CaseComment extends LightningElement {
                  
             }));
         } else if (error) {
-            this.showToast('Error', error.body.message, 'error');
+            this.showToast('Erreur', error.body.message, 'error');
         }
     }
 
@@ -68,7 +68,7 @@ export default class CaseComment extends LightningElement {
                 this.isNewComment = false;
             })
             .catch(error => {
-                this.showToast('Error', error.body.message, 'error');
+                this.showToast('Erreur', error.body.message, 'error');
             });
     }
 
